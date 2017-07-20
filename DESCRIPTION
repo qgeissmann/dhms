@@ -1,13 +1,12 @@
 Package: dhms
-Title: Class to Format Time in Days, Hours, Minutes and Seconds
-Version: 0.0.0.9000
+Title: Time in Days, Hours, Minutes and Seconds
+Version: 0.1.0
 Authors@R: person("Quentin", "Geissmann", email = "qgeissmann@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Implements an S3 class for storing and formatting relative time (durations)
+    values, based on the 'numeric' class.
 Depends: R (>= 3.4.0)
 Imports:
     hms,
-    methods,
-    pkgconfig,
     stringr
 License: GPL-3
 Encoding: UTF-8
