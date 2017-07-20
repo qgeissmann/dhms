@@ -15,10 +15,10 @@ round_dhms <- function(x, secs) {
   as.dhms(round(as.numeric(x) / secs) * secs)
 }
 
-#' @rdname round_hms
+#' @rdname round_dhms
 #' @export
 #' @examples
-#' trunc_hms(as.dhms("2d 12:34:56"), 60)
+#' trunc_dhms(as.dhms("2d 12:34:56"), 60)
 trunc_dhms <- function(x, secs) {
   as.dhms(trunc(as.numeric(x) / secs) * secs)
 }

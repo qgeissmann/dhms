@@ -7,7 +7,7 @@
 \alias{as.dhms.default}
 \alias{as.dhms.difftime}
 \alias{as.dhms.numeric}
-\alias{as.dhms.charcter}
+\alias{as.dhms.character}
 \alias{as.character.dhms}
 \alias{format.dhms}
 \alias{print.dhms}
@@ -23,7 +23,7 @@ as.dhms(x, ...)
 
 \method{as.dhms}{numeric}(x, ...)
 
-\method{as.dhms}{charcter}(x, ...)
+\method{as.dhms}{character}(x, ...)
 
 \method{as.character}{dhms}(x, ...)
 
@@ -52,16 +52,15 @@ For `dhms`, all arguments must have the same length or be
   `hours` but not `minutes`) are rejected.
 }
 \examples{
-\dontrun{
-#' hms(56, 34, 12)
-as.hms(1)
-as.hms("12:34:56")
-as.hms(Sys.time())
-as.POSIXct(hms(1))
-  # Will raise an error
-  data.frame(a = hms(1))
-d <- data.frame(hours = 1:3)
-d$hours <- hms(hours = d$hours)
-d
-}
+dhms(56, 34, 12)
+dhms(56, 34, 12,1)
+as.dhms(3600 * 2 + 60* 23+ 59 )
+as.dhms("-1d 12:34:56")[1]
+as.dhms(Sys.time())
+dhms(102031) - "20:00:00"
+dhms(20) == "00:00:20"
+dhms(21) > "00:00:20"
+dhms(19) < "00:00:20"
+print(dhms(56, 34, 12,1))
+print(-dhms(56, 34, 12,1))
 }

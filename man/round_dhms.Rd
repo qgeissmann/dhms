@@ -2,9 +2,12 @@
 % Please edit documentation in R/round.R
 \name{round_dhms}
 \alias{round_dhms}
+\alias{trunc_dhms}
 \title{Round or truncate to a multiple of seconds}
 \usage{
 round_dhms(x, secs)
+
+trunc_dhms(x, secs)
 }
 \arguments{
 \item{x}{A vector of class [dhms]}
@@ -23,4 +26,5 @@ round_dhms(as.dhms("12:34:56"), 5)
 round_dhms(as.dhms("12:34:56"), 60)
 round_dhms(as.dhms("1d 12:34:56"), 60)
 round_dhms(as.dhms("-1d 12:34:56"), 60)
+trunc_dhms(as.dhms("2d 12:34:56"), 60)
 }

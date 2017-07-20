@@ -24,7 +24,9 @@ parse_dhms <- function(x) {
   # decimal seconds
   n_seconds <- n_seconds + ifelse(is.na(match[,5]),0,as.numeric(match[,5]))
   # match the tailing `-`
-  dhms(ifelse(is.na(match[,2]),n_seconds, -n_seconds))
+
+  out <- ifelse(is.na(match[,2]),n_seconds, -n_seconds)
+  as.numeric(out)
 
 }
 

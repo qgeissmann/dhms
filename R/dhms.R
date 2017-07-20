@@ -10,21 +10,18 @@ setClass("dhms", contains = "numeric")
 #'
 #' @name dhms
 #' @examples
-#' \dontrun{
-#' #' hms(56, 34, 12)
-#' as.hms(1)
-#' as.hms("12:34:56")
-#' as.hms(Sys.time())
-#' as.POSIXct(hms(1))
-#'   # Will raise an error
-#'   data.frame(a = hms(1))
-#' d <- data.frame(hours = 1:3)
-#' d$hours <- hms(hours = d$hours)
-#' d
-#' }
-
+#' dhms(56, 34, 12)
+#' dhms(56, 34, 12,1)
+#' as.dhms(3600 * 2 + 60* 23+ 59 )
+#' as.dhms("-1d 12:34:56")[1]
+#' as.dhms(Sys.time())
+#' dhms(102031) - "20:00:00"
+#' dhms(20) == "00:00:20"
+#' dhms(21) > "00:00:20"
+#' dhms(19) < "00:00:20"
+#' print(dhms(56, 34, 12,1))
+#' print(-dhms(56, 34, 12,1))
 NULL
-
 
 #' @rdname dhms
 #' @details For `dhms`, all arguments must have the same length or be
@@ -35,7 +32,7 @@ NULL
 #' @export
 dhms <- function(seconds = NULL, minutes = NULL, hours = NULL, days = NULL) {
   args <- list(seconds = seconds, minutes = minutes, hours = hours, days = days)
-  #hms:::check_args(args)
+  hms:::check_args(args)
   arg_secs <- mapply(`*`, args, c(1, 60, 3600, 86400))
   secs <- Reduce(`+`, arg_secs[vapply(arg_secs, length, integer(1L)) > 0L])
 
@@ -52,8 +49,7 @@ as.dhms <- function(x, ...) UseMethod("as.dhms", x)
 #' @rdname dhms
 #' @export
 as.dhms.default <- function(x, ...) {
-  stop("Can't convert object of class ", paste(class(x), collapse = ", "),
-       " to dhms.", call. = FALSE)
+  as.dhms(as.numeric(hms::as.hms(x)))
 }
 
 #' @rdname dhms
@@ -69,7 +65,7 @@ as.dhms.numeric <- function(x, ...) dhms(x)
 
 #' @rdname dhms
 #' @export
-as.dhms.charcter <- function(x, ...) parse_dhms(x)
+as.dhms.character <- function(x, ...) as.numeric(parse_dhms(x))
 
 
 #' @rdname dhms
@@ -85,7 +81,23 @@ as.character.dhms <- function(x, ...) {
 }
 
 
+#' @export
+`Ops.dhms` <- function(e1, e2=NULL) {
+  if (nargs() == 1)
+    NextMethod(.Generic)
+  if(is.character(e2))
+    e2 <- parse_dhms(e2)
+
+  if(is.character(e1))
+    e1 <- parse_dhms(e1)
+  NextMethod(.Generic)
+
+}
+
+
+
 # Output ------------------------------------------------------------------
+
 
 #' @rdname dhms
 #' @export
