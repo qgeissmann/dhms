@@ -5,16 +5,15 @@ output:
 ---
 
 # dhms
+
 <!-- [![Travis-CI Build Status](https://travis-ci.org/tidyverse/hms.svg?branch=master)](https://travis-ci.org/tidyverse/hms) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/tidyverse/hms?branch=master&svg=true)](https://ci.appveyor.com/project/tidyverse/hms) [![Coverage Status](https://img.shields.io/codecov/c/github/tidyverse/hms/master.svg)](https://codecov.io/github/tidyverse/hms?branch=master) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/hms)](https://cran.r-project.org/package=hms) -->
 
 A simple class for storing durations values and displaying them in the `Dd HH:MM:SS` format. 
-The implementation is exhaustivelly based on the very kneat [hms class](https://github.com/tidyverse/hms).
-Intended to facilitate representation and manipulations of duration in the context of ethological expriments.
+The implementation is exhaustively based on the very neat [hms class](https://github.com/tidyverse/hms).
+Intended to facilitate representation and manipulations of duration in the context of ethological experiments (that typically last several days).
 
-The values are stored as a numeric vector a number of seconds. 
-Implicitly, either since the onset of the experiment, or [ZT0](https://en.wikipedia.org/wiki/Zeitgeber) on the reference day.
-used in a data frame.
-
+The values are simply stored as a numeric vector a number of seconds. 
+Implicitly, either since the onset of the experiment or since [ZT0](https://en.wikipedia.org/wiki/Zeitgeber) on the reference day.
 
 
 ```{r, echo = FALSE}
@@ -25,14 +24,100 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
+
 ```{r}
 library(hms)
 library(dhms)
 ```
 
-|        function       |             hms        |          dhms       |
-|:--------------------- | ----------------------:|:------------------- |
-| `as.character()` |`hms(56, 34, 12, 2)` => `r as.character(hms(56, 34, 12, 2))` |  `dhms(56, 34, 12, 2)` => `r as.character(dhms(56, 34, 12, 2))` | 
+# Differences with `hms`
+
+Display
+-----------
+
+In `dhms`, we express number of days to reduce cognitive burden after 72h.
+this is convenient for circadian experiments:
+
+```{r}
+seconds <- seq(from =1, to =10 * 24 * 3600, by=27*3600)
+df <- data.frame(hms=hms(seconds), dhms=as.character(dhms(seconds)))
+print(df)
+```
+
+Parsing
+-----------
+
+Parsing optional **number of days** and **negative values**:
+
+```{r}
+time_str <- c("12:34:56",         # regular format
+              "1d 12:34:56",      # number of days (integer)
+              "12:34:56.789",     # decimal points
+              "1d 12:34:56.001",  # decimal points and days
+              "-1d 12:34:56.001", # negative values
+              "-1d 12:34:56.001", # negative values and space
+              "-12:34:56.001"     # negative values without days
+              )
+df <- data.frame(time_str=time_str, hms=as.hms(time_str), dhms=as.dhms(time_str))
+print(df)
+```
 
 
+
+Arithmetics
+-----------
+
+In `hms`, arithmetic operation return `difftime` object
+
+```{r}
+a <- hms(123) # 123 seconds
+b <- hms(125)
+print(a - b) # this returns a `difftime`
+class(a - b)
+print(a - 1) # this too
+class(a - 1)
+```
+
+With `dhms`, we want to add or subtract constant to our time, but **keep expressing the result as a pretty duration**. Typically, you want to change the origin of your time, so you just subtract a number of seconds.
+```{r}
+a <- dhms(123)
+b <- dhms(125)
+print(a - b) # This returns another dhmss which expresses a duration
+print(class(a - b))
+print(a - 1) # Same here
+print(class(a - 1))
+```
+
+Operations with time strings
+---------------------------------------
+
+In `hms`, we can't compare strings directly to time. 
+One would have to use `as.hms()` on strings before comparison, which explicitly converts them to `hms` objects.
+It is quite convenient to compare formatted strings directly to objects.
+This is what happends in R for things like `POSIXct` objects:
+
+```{r}
+date = as.POSIXct("2017-12-12") 
+print(date)
+print(date  == "2017-12-12")
+print(date  > "2015-06-12" )
+```
+Likewise, in `dhms`, operations with strings implicitly converts them string to a duration representation.
+
+```{r}
+time_str <- "00:02:10"
+a_hms <- as.hms(time_str)
+b_hms <- as.hms("00:02:02") 
+
+a_dhms <- as.dhms(time_str)
+b_dhms <- as.dhms("00:02:02") 
+
+data.frame(operation = c("a == time_str", "b > a", "b > time_str", "a + time_str"), 
+           hms=as.character(c(a_hms == time_str, b_hms > a_hms, b_hms > time_str, "FAILS")),
+           dhms=as.character(c(a_dhms == time_str, b_dhms > a_dhms, b_dhms > time_str, as.character(a_dhms + time_str)))
+           
+           )
+```
 

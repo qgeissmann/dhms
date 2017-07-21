@@ -65,7 +65,7 @@ as.dhms.numeric <- function(x, ...) dhms(x)
 
 #' @rdname dhms
 #' @export
-as.dhms.character <- function(x, ...) as.numeric(parse_dhms(x))
+as.dhms.character <- function(x, ...) dhms(parse_dhms(x))
 
 
 #' @rdname dhms
