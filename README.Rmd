@@ -42,7 +42,7 @@ this is convenient for circadian experiments:
 
 ```{r}
 seconds <- seq(from =1, to =10 * 24 * 3600, by=27*3600)
-df <- data.frame(hms=hms(seconds), dhms=as.character(dhms(seconds)))
+df <- data.frame(hms=hms(seconds), dhms=dhms(seconds))
 print(df)
 ```
 
@@ -84,7 +84,7 @@ With `dhms`, we want to add or subtract constant to our time, but **keep express
 ```{r}
 a <- dhms(123)
 b <- dhms(125)
-print(a - b) # This returns another dhmss which expresses a duration
+print(a - b) # This returns another dhms, which expresses a duration
 print(class(a - b))
 print(a - 1) # Same here
 print(class(a - 1))
@@ -114,10 +114,10 @@ b_hms <- as.hms("00:02:02")
 a_dhms <- as.dhms(time_str)
 b_dhms <- as.dhms("00:02:02") 
 
-data.frame(operation = c("a == time_str", "b > a", "b > time_str", "a + time_str"), 
-           hms=as.character(c(a_hms == time_str, b_hms > a_hms, b_hms > time_str, "FAILS")),
-           dhms=as.character(c(a_dhms == time_str, b_dhms > a_dhms, b_dhms > time_str, as.character(a_dhms + time_str)))
-           
+dt <- data.frame(operation = c("a == 00:02:10", "b > a", "b > 00:02:10", "a + 00:02:10"),
+           hms=c(a_hms == time_str, b_hms > a_hms, b_hms > time_str, "FAILS"),
+           dhms=c(a_dhms == time_str, b_dhms > a_dhms, b_dhms > time_str, as.character(a_dhms + time_str))
            )
+print(dt)
 ```
 

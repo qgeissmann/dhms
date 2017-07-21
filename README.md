@@ -22,7 +22,7 @@ In `dhms`, we express number of days to reduce cognitive burden after 72h. this 
 
 ``` r
 seconds <- seq(from =1, to =10 * 24 * 3600, by=27*3600)
-df <- data.frame(hms=hms(seconds), dhms=as.character(dhms(seconds)))
+df <- data.frame(hms=hms(seconds), dhms=dhms(seconds))
 print(df)
 #>         hms        dhms
 #> 1  00:00:01 0d 00:00:01
@@ -85,7 +85,7 @@ With `dhms`, we want to add or subtract constant to our time, but **keep express
 ``` r
 a <- dhms(123)
 b <- dhms(125)
-print(a - b) # This returns another dhmss which expresses a duration
+print(a - b) # This returns another dhms, which expresses a duration
 #> -0d 00:00:02
 print(class(a - b))
 #> [1] "dhms"
@@ -124,14 +124,14 @@ b_hms <- as.hms("00:02:02")
 a_dhms <- as.dhms(time_str)
 b_dhms <- as.dhms("00:02:02") 
 
-data.frame(operation = c("a == time_str", "b > a", "b > time_str", "a + time_str"), 
-           hms=as.character(c(a_hms == time_str, b_hms > a_hms, b_hms > time_str, "FAILS")),
-           dhms=as.character(c(a_dhms == time_str, b_dhms > a_dhms, b_dhms > time_str, as.character(a_dhms + time_str)))
-           
+dt <- data.frame(operation = c("a == 00:02:10", "b > a", "b > 00:02:10", "a + 00:02:10"),
+           hms=c(a_hms == time_str, b_hms > a_hms, b_hms > time_str, "FAILS"),
+           dhms=c(a_dhms == time_str, b_dhms > a_dhms, b_dhms > time_str, as.character(a_dhms + time_str))
            )
+print(dt)
 #>       operation   hms        dhms
-#> 1 a == time_str FALSE        TRUE
+#> 1 a == 00:02:10 FALSE        TRUE
 #> 2         b > a FALSE       FALSE
-#> 3  b > time_str  TRUE       FALSE
-#> 4  a + time_str FAILS 0d 00:04:20
+#> 3  b > 00:02:10  TRUE       FALSE
+#> 4  a + 00:02:10 FAILS 0d 00:04:20
 ```
