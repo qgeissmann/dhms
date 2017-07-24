@@ -8,17 +8,23 @@ A simple class for storing durations values and displaying them in the `Dd HH:MM
 The values are simply stored as a numeric vector a number of seconds. Implicitly, either since the onset of the experiment or since [ZT0](https://en.wikipedia.org/wiki/Zeitgeber) on the reference day.
 
 ``` r
-library(hms)
+library(devtools)
+install_github("qgeissmann/dhms")
 library(dhms)
 ```
 
 Differences with `hms`
 ======================
 
+``` r
+library(dhms)
+library(hms)
+```
+
 Display
 -------
 
-In `dhms`, we express number of days to reduce cognitive burden after 72h. this is convenient for circadian experiments:
+In `dhms`, we express number of days to reduce cognitive burden after 72h. This is convenient for circadian experiments:
 
 ``` r
 seconds <- seq(from =1, to =10 * 24 * 3600, by=27*3600)
@@ -52,14 +58,14 @@ time_str <- c("12:34:56",         # regular format
               )
 df <- data.frame(time_str=time_str, hms=as.hms(time_str), dhms=as.dhms(time_str))
 print(df)
-#>           time_str      hms         dhms
-#> 1         12:34:56 12:34:56  0d 12:34:56
-#> 2      1d 12:34:56       NA  1d 12:34:56
-#> 3     12:34:56.789 12:34:56  0d 12:48:05
-#> 4  1d 12:34:56.001       NA  1d 12:34:57
-#> 5 -1d 12:34:56.001       NA -1d 12:34:57
-#> 6 -1d 12:34:56.001       NA -1d 12:34:57
-#> 7    -12:34:56.001       NA -0d 12:34:57
+#>           time_str      hms             dhms
+#> 1         12:34:56 12:34:56  0d 12:34:56.000
+#> 2      1d 12:34:56       NA  1d 12:34:56.000
+#> 3     12:34:56.789 12:34:56  0d 12:34:56.789
+#> 4  1d 12:34:56.001       NA  1d 12:34:56.001
+#> 5 -1d 12:34:56.001       NA -1d 12:34:56.001
+#> 6 -1d 12:34:56.001       NA -1d 12:34:56.001
+#> 7    -12:34:56.001       NA -0d 12:34:56.001
 ```
 
 Arithmetics

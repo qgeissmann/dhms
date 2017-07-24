@@ -15,6 +15,11 @@ Intended to facilitate representation and manipulations of duration in the conte
 The values are simply stored as a numeric vector a number of seconds. 
 Implicitly, either since the onset of the experiment or since [ZT0](https://en.wikipedia.org/wiki/Zeitgeber) on the reference day.
 
+```{r,eval=FALSE}
+library(devtools)
+install_github("qgeissmann/dhms")
+library(dhms)
+```
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
@@ -27,18 +32,20 @@ knitr::opts_chunk$set(
 
 
 
-```{r}
-library(hms)
-library(dhms)
-```
+
 
 # Differences with `hms`
+
+```{r}
+library(dhms)
+library(hms)
+```
 
 Display
 -----------
 
 In `dhms`, we express number of days to reduce cognitive burden after 72h.
-this is convenient for circadian experiments:
+This is convenient for circadian experiments:
 
 ```{r}
 seconds <- seq(from =1, to =10 * 24 * 3600, by=27*3600)
