@@ -8,7 +8,9 @@ r:
   - release
   - devel
 
-r_packages: covr
+r_packages:
+  - covr
+  - testthat
 
 after_success:
   - Rscript -e 'covr::codecov()'
