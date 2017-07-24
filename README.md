@@ -51,13 +51,13 @@ Parsing optional **number of days** and **negative values**:
 ``` r
 time_str <- c("12:34:56",         # regular format
               "12:34:56.789",     # decimal points
-              "20:12",             # HH:MM (no seconds)
+              "20:12",            # HH:MM (no seconds)
               "-12:34:56.001",    # negative values without days
               "1d 12:34:56",      # number of days (integer)
               "1d 12:34:56.001",  # decimal points and days
               "-1d 12:34:56.001", # negative values
               "-1d 12:34:56.001", # negative values and space
-              "0.5d"             # day only
+              "0.5d"              # day only
               
               )
 df <- data.frame(time_str=time_str, hms=as.hms(time_str), dhms=as.dhms(time_str))
@@ -114,7 +114,7 @@ print(class(a - 1))
 Operations with time strings
 ----------------------------
 
-In `hms`, we can't compare strings directly to time. One would have to use `as.hms()` on strings before comparison, which explicitly converts them to `hms` objects. It is quite convenient to compare formatted strings directly to objects. This is what happends in R for things like `POSIXct` objects:
+In `hms`, we can't compare strings directly to time. One would have to use `as.hms()` on strings before comparison, which explicitly converts them to `hms` objects. It is quite convenient to compare formatted strings directly to objects. This is what happens in R for things like `POSIXct` objects:
 
 ``` r
 date = as.POSIXct("2017-12-12") 
@@ -126,7 +126,7 @@ print(date  > "2015-06-12" )
 #> [1] TRUE
 ```
 
-Likewise, in `dhms`, operations with strings implicitly converts them string to a duration representation.
+Likewise, in `dhms`, operations with strings implicitly converts to a duration representation.
 
 ``` r
 time_str <- "00:02:10"
