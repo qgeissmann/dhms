@@ -7,6 +7,7 @@
 #' fractional seconds and supports negative times.
 #' @param x A character vector
 #' @export
+#' @noRd
 #' @examples
 #' time_str = c("12:34:56", "1d 12:34:56", "12:34:56.789", "1d 12:34:56.001",
 #'              "-1d 12:34:56.001", "- 1d 12:34:56.001")

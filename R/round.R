@@ -6,6 +6,7 @@
 #'   are supported
 #' @return The input, rounded or truncated to the nearest multiple of `secs`
 #' @export
+#' @noRd
 #' @examples
 #' round_dhms(as.dhms("12:34:56"), 5)
 #' round_dhms(as.dhms("12:34:56"), 60)
@@ -15,7 +16,7 @@ round_dhms <- function(x, secs) {
   as.dhms(round(as.numeric(x) / secs) * secs)
 }
 
-#' @rdname round_dhms
+#' @noRd
 #' @export
 #' @examples
 #' trunc_dhms(as.dhms("2d 12:34:56"), 60)
