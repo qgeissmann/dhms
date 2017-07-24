@@ -9,8 +9,8 @@ output:
 [![Travis-CI Build Status](https://travis-ci.org/qgeissmann/dhms.svg?branch=master)](https://travis-ci.org/qgeissmann/dhms)<!--[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/tidyverse/hms?branch=master&svg=true)](https://ci.appveyor.com/project/tidyverse/hms) [![Coverage Status](https://img.shields.io/codecov/c/github/tidyverse/hms/master.svg)](https://codecov.io/github/tidyverse/hms?branch=master) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/hms)](https://cran.r-project.org/package=hms) -->
 
 A simple class for storing durations values and displaying them in the `Dd HH:MM:SS` format. 
+Intended to facilitate representation and manipulations of duration in the context of ethological experiments (which typically last several days).
 The implementation is exhaustively based on the very neat [hms class](https://github.com/tidyverse/hms).
-Intended to facilitate representation and manipulations of duration in the context of ethological experiments (that typically last several days).
 
 The values are simply stored as a numeric vector a number of seconds. 
 Implicitly, either since the onset of the experiment or since [ZT0](https://en.wikipedia.org/wiki/Zeitgeber) on the reference day.
