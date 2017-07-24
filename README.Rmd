@@ -60,12 +60,15 @@ Parsing optional **number of days** and **negative values**:
 
 ```{r}
 time_str <- c("12:34:56",         # regular format
-              "1d 12:34:56",      # number of days (integer)
               "12:34:56.789",     # decimal points
+              "20:12",             # HH:MM (no seconds)
+              "-12:34:56.001",    # negative values without days
+              "1d 12:34:56",      # number of days (integer)
               "1d 12:34:56.001",  # decimal points and days
               "-1d 12:34:56.001", # negative values
               "-1d 12:34:56.001", # negative values and space
-              "-12:34:56.001"     # negative values without days
+              "0.5d"             # day only
+              
               )
 df <- data.frame(time_str=time_str, hms=as.hms(time_str), dhms=as.dhms(time_str))
 print(df)

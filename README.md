@@ -49,23 +49,28 @@ Parsing optional **number of days** and **negative values**:
 
 ``` r
 time_str <- c("12:34:56",         # regular format
-              "1d 12:34:56",      # number of days (integer)
               "12:34:56.789",     # decimal points
+              "20:12",             # HH:MM (no seconds)
+              "-12:34:56.001",    # negative values without days
+              "1d 12:34:56",      # number of days (integer)
               "1d 12:34:56.001",  # decimal points and days
               "-1d 12:34:56.001", # negative values
               "-1d 12:34:56.001", # negative values and space
-              "-12:34:56.001"     # negative values without days
+              "0.5d"             # day only
+              
               )
 df <- data.frame(time_str=time_str, hms=as.hms(time_str), dhms=as.dhms(time_str))
 print(df)
 #>           time_str      hms             dhms
 #> 1         12:34:56 12:34:56  0d 12:34:56.000
-#> 2      1d 12:34:56       NA  1d 12:34:56.000
-#> 3     12:34:56.789 12:34:56  0d 12:34:56.789
-#> 4  1d 12:34:56.001       NA  1d 12:34:56.001
-#> 5 -1d 12:34:56.001       NA -1d 12:34:56.001
-#> 6 -1d 12:34:56.001       NA -1d 12:34:56.001
-#> 7    -12:34:56.001       NA -0d 12:34:56.001
+#> 2     12:34:56.789 12:34:56  0d 12:34:56.789
+#> 3            20:12       NA  0d 20:12:00.000
+#> 4    -12:34:56.001       NA -0d 12:34:56.001
+#> 5      1d 12:34:56       NA  1d 12:34:56.000
+#> 6  1d 12:34:56.001       NA  1d 12:34:56.001
+#> 7 -1d 12:34:56.001       NA -1d 12:34:56.001
+#> 8 -1d 12:34:56.001       NA -1d 12:34:56.001
+#> 9             0.5d       NA  0d 12:00:00.000
 ```
 
 Arithmetics

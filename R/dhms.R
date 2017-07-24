@@ -79,7 +79,7 @@ as.character.dhms <- function(x, ...) {
     hms:::format_split_seconds(x)))
 }
 
-
+#' @rdname dhms
 #' @export
 `Ops.dhms` <- function(e1, e2=NULL) {
   if (nargs() == 1)
@@ -101,6 +101,12 @@ as.character.dhms <- function(x, ...) {
 #' @rdname dhms
 #' @export
 `[.dhms` <- function(x, ...) {
+  dhms(NextMethod())
+}
+
+#' @rdname dhms
+#' @export
+c.dhms <- function(x, ...) {
   dhms(NextMethod())
 }
 

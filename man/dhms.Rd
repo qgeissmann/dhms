@@ -9,8 +9,10 @@
 \alias{as.dhms.numeric}
 \alias{as.dhms.character}
 \alias{as.character.dhms}
+\alias{Ops.dhms}
 \alias{[[.dhms}
 \alias{[.dhms}
+\alias{c.dhms}
 \alias{format.dhms}
 \alias{print.dhms}
 \title{A simple class for storing time-of-day values}
@@ -29,9 +31,13 @@ as.dhms(x, ...)
 
 \method{as.character}{dhms}(x, ...)
 
+\method{Ops}{dhms}(e1, e2 = NULL)
+
 \method{[[}{dhms}(x, ...)
 
 \method{[}{dhms}(x, ...)
+
+\method{c}{dhms}(x, ...)
 
 \method{format}{dhms}(x, ...)
 
