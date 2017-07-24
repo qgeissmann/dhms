@@ -1,16 +1,16 @@
 setClass("dhms", contains = "numeric")
 
-#' A simple class for storing time-of-day values
+#' A simple class for storing, printing and calculating on time durations.
 #'
-#' The values are stored as a [numeric] vector with a custom class,
-#' and always with "seconds" as unit for robust coercion to numeric.
-#' Supports construction from time values, coercion to and from
-#' various data types, and formatting.  Can be used as a regular column in a
-#' data frame.
+#' It derives from [numeric] and internally represents time in "seconds".
+#' Conceptually very close to [hms::hms], but with day values and arithmetics operations.
+#' Supports construction from formatted string, coercion to and from
+#' various data types.
+#' Can be used as a regular column in a data frame.
 #'
 #' @name dhms
 #' @examples
-#' print(as.dhms(c(dhms(56, 34, 12),dhms(56, 34, 12))))
+#' print(c(dhms(56, 34, 12),dhms(56, 34, 12)))
 #' dhms(56, 34, 12,1)
 #' as.dhms(3600 * 2 + 60* 23+ 59 )
 #' as.dhms("-1d 12:34:56")[1]
@@ -19,14 +19,19 @@ setClass("dhms", contains = "numeric")
 #' dhms(20) == "00:00:20"
 #' dhms(21) > "00:00:20"
 #' dhms(19) < "00:00:20"
-#' print(dhms(56, 34, 12,1))
+#' print(as.dhms("0.5d"))
 #' print(-dhms(56, 34, 12,1))
+#' \dontrun{
+#' # we expect ERRORS in the folowing cases
+#' as.dhms("0.5d 21:00:00") # decimal days and hours
+#' as.dhms("1d 64:00:00") # more than 24h, and days
+#' }
 NULL
 
 #' @rdname dhms
 #' @details For `dhms`, all arguments must have the same length or be
 #'   `NULL`.  Odd combinations (e.g., passing only `seconds` and
-#'   `hours` but not `minutes`) are rejected.
+#'   `hours` but not `minutes`) are rejected and throw an error.
 #' @param seconds,minutes,hours,days Time since ZT0. No bounds checking is
 #'   performed.
 #' @export

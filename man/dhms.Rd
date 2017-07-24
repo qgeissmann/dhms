@@ -11,7 +11,7 @@
 \alias{as.character.dhms}
 \alias{format.dhms}
 \alias{print.dhms}
-\title{A simple class for storing time-of-day values}
+\title{A simple class for storing, printing and calculating on time durations.}
 \usage{
 dhms(seconds = NULL, minutes = NULL, hours = NULL, days = NULL)
 
@@ -40,19 +40,19 @@ performed.}
 \item{...}{Arguments passed on to further methods.}
 }
 \description{
-The values are stored as a [numeric] vector with a custom class,
-and always with "seconds" as unit for robust coercion to numeric.
-Supports construction from time values, coercion to and from
-various data types, and formatting.  Can be used as a regular column in a
-data frame.
+It derives from \link{numeric} and internally represents time in "seconds".
+Conceptually very close to \link[hms:hms]{hms::hms}, but with day values and arithmetics operations.
+Supports construction from formatted string, coercion to and from
+various data types.
+Can be used as a regular column in a data frame.
 }
 \details{
-For `dhms`, all arguments must have the same length or be
-  `NULL`.  Odd combinations (e.g., passing only `seconds` and
-  `hours` but not `minutes`) are rejected.
+For \code{dhms}, all arguments must have the same length or be
+\code{NULL}.  Odd combinations (e.g., passing only \code{seconds} and
+\code{hours} but not \code{minutes}) are rejected.
 }
 \examples{
-print(as.dhms(c(dhms(56, 34, 12),dhms(56, 34, 12))))
+print(c(dhms(56, 34, 12),dhms(56, 34, 12)))
 dhms(56, 34, 12,1)
 as.dhms(3600 * 2 + 60* 23+ 59 )
 as.dhms("-1d 12:34:56")[1]
@@ -61,6 +61,11 @@ dhms(102031) - "20:00:00"
 dhms(20) == "00:00:20"
 dhms(21) > "00:00:20"
 dhms(19) < "00:00:20"
-print(dhms(56, 34, 12,1))
+print(as.dhms("0.5d"))
 print(-dhms(56, 34, 12,1))
+\dontrun{
+# we expect ERRORS in the folowing cases
+as.dhms("0.5d 21:00:00") # decimal days and hours
+as.dhms("1d 64:00:00") # more than 24h, and days
+}
 }
