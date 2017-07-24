@@ -10,7 +10,7 @@ setClass("dhms", contains = "numeric")
 #'
 #' @name dhms
 #' @examples
-#' dhms(56, 34, 12)
+#' print(as.dhms(c(dhms(56, 34, 12),dhms(56, 34, 12))))
 #' dhms(56, 34, 12,1)
 #' as.dhms(3600 * 2 + 60* 23+ 59 )
 #' as.dhms("-1d 12:34:56")[1]
@@ -35,8 +35,7 @@ dhms <- function(seconds = NULL, minutes = NULL, hours = NULL, days = NULL) {
   hms:::check_args(args)
   arg_secs <- mapply(`*`, args, c(1, 60, 3600, 86400))
   secs <- Reduce(`+`, arg_secs[vapply(arg_secs, length, integer(1L)) > 0L])
-
-  new("dhms",secs)
+  methods::new("dhms",secs)
 }
 
 
@@ -94,7 +93,16 @@ as.character.dhms <- function(x, ...) {
 
 }
 
-
+#' @rdname dhms
+#' @export
+`[[.dhms` <- function(x, ...) {
+  dhms(NextMethod())
+}
+#' @rdname dhms
+#' @export
+`[.dhms` <- function(x, ...) {
+  dhms(NextMethod())
+}
 
 # Output ------------------------------------------------------------------
 
@@ -111,3 +119,7 @@ print.dhms <- function(x, ...) {
   cat(format(x), sep = "\n")
   invisible(x)
 }
+
+setMethod('show', 'dhms',
+          function(object) print(object)
+)

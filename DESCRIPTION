@@ -7,7 +7,11 @@ Description: Implements an S3 class for storing and formatting relative time (du
 Depends: R (>= 3.4.0)
 Imports:
     hms,
-    stringr
+    stringr,
+    methods
+Suggests: 
+    testthat,
+    devtools
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

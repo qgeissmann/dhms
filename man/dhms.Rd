@@ -9,6 +9,8 @@
 \alias{as.dhms.numeric}
 \alias{as.dhms.character}
 \alias{as.character.dhms}
+\alias{[[.dhms}
+\alias{[.dhms}
 \alias{format.dhms}
 \alias{print.dhms}
 \title{A simple class for storing time-of-day values}
@@ -26,6 +28,10 @@ as.dhms(x, ...)
 \method{as.dhms}{character}(x, ...)
 
 \method{as.character}{dhms}(x, ...)
+
+\method{[[}{dhms}(x, ...)
+
+\method{[}{dhms}(x, ...)
 
 \method{format}{dhms}(x, ...)
 
@@ -52,7 +58,7 @@ For `dhms`, all arguments must have the same length or be
   `hours` but not `minutes`) are rejected.
 }
 \examples{
-dhms(56, 34, 12)
+print(as.dhms(c(dhms(56, 34, 12),dhms(56, 34, 12))))
 dhms(56, 34, 12,1)
 as.dhms(3600 * 2 + 60* 23+ 59 )
 as.dhms("-1d 12:34:56")[1]

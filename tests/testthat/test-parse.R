@@ -58,5 +58,3 @@ test_that("as.dhms.character", {
   expect_error(parse_dhms("1d 12:10:ss"))
 })
 
-
-
